@@ -1,7 +1,7 @@
-export const Cat = (props: any) => {
+export const Dog = (props: any) => {
   return (
     <div>
-      <h1>Cat</h1>
+      <h1>Dog</h1>
       <div>{props.str ? props.str : '..'}</div>
     </div>
   );
