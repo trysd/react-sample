@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import './App.scss';
 
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import { Top } from './components/top/Top';
@@ -10,7 +10,9 @@ import { Error } from './components/Error/Error';
 function App() {
   return (
     <div className="App">
-      <p>test..</p>
+
+      <p>test.</p>
+
       <BrowserRouter>
       <Switch>
         <Route exact path='/' component={Top} />
