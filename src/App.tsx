@@ -27,7 +27,7 @@ function App() {
         {/* <Route path='/cat' component={Cat} /> */}
         {/* <Route path='/Dog' component={Dog} /> */}
         <Route path="/cat">
-          <Cat str="is cat page" />
+          <Cat />
         </Route>
         <Route path="/dog">
           <Dog str="is dog page" />
