@@ -1,62 +1,39 @@
-import React from 'react';
 
-import './App.scss';
+// Vite で最速 React & TypeScript
+// https://zenn.dev/sprout2000/articles/98145cf2a807b1
 
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import { Top } from './components/top/Top';
-import { Cat } from './components/cat/Cat';
-import { Error } from './components/Error/Error';
-import { Dog } from './components/dog/Dog';
+// Redux入門者向け初めてのRedux ToolkitとRedux Thunkの非同期処理
+// https://reffect.co.jp/react/redux-toolkit
 
-// React hooksを基礎から理解する (useState編)
-// https://qiita.com/seira/items/f063e262b1d57d7e78b4
-// ..
+// インストール時
+// npm create vite
+// npm install @reduxjs/toolkit react-redux
 
-// propsとstateのイメージをつかむ【はじめてのReact】
-// https://qiita.com/rio_threehouse/items/7632f5a593cf218b9504
+import reactLogo from './assets/react.svg'
+import './App.css'
+import { Counter } from './features/counter/Counter'
 
 function App() {
+
   return (
     <div className="App">
-
-      <p>test.</p>
-
-      <BrowserRouter>
-      <Switch>
-        <Route exact path='/' component={Top} />
-        {/* <Route path='/cat' component={Cat} /> */}
-        {/* <Route path='/Dog' component={Dog} /> */}
-        <Route path="/cat">
-          <Cat />
-        </Route>
-        <Route path="/dog">
-          <Dog str="is dog page" />
-        </Route>
-
-        <Route path="*" component={Error} /> {/* 404は機能している */}
-      </Switch>
-
-      <p>
-        <Link to='/'>Back To Top</Link> / <Link to='/cat'>Cat</Link> / <Link to='/dog'>Dog</Link>
-      </p>
-
-      </BrowserRouter>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
-      </header> */}
+        <a href="https://reactjs.org" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <Counter />
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
