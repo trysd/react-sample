@@ -1,6 +1,15 @@
+
+import * as React from 'react';
+import { lazy } from 'react';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import { Cats } from '../cat/Cats'
-import { Dogs } from '../dog/Dogs';
+// import { Cats } from '../cat/Cats'
+// import { Dogs } from '../dog/Dogs';
+
+// https://ja.reactjs.org/docs/code-splitting.html
+const CatsComponent = lazy(() => import("../cat/Cats").then(({ Cats }) => ({ default: Cats })));
+const DogsComponent = lazy(() => import("../dog/Dogs").then(({ Dogs }) => ({ default: Dogs })));
+
+// Lazy Loading は Suspense の子孫に配置する
 
 export const Animals = () => {
 
@@ -10,10 +19,14 @@ export const Animals = () => {
       <BrowserRouter>
         <Switch>
           <Route path="/cats">
-            <Cats />
+            <React.Suspense fallback={<div>Loading cats...</div>}>
+              <CatsComponent />
+            </React.Suspense>
           </Route>
           <Route path="/dogs">
-            <Dogs />
+            <React.Suspense fallback={<div>Loading dogs...</div>}>
+              <DogsComponent />
+            </React.Suspense>
           </Route>
         </Switch>
         <p>
