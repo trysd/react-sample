@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
-import type { RootState } from '../../app/store'
+import type { RootCounterState } from '../../store/store-counter'
 import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment, incrementAsync, incrementByAmount } from './counterSlice'
+import { decrement, increment, incrementAsync, incrementByAmount } from '../../store/counter/slice-counter'
 import styles from './Counter.module.css'
 
 export function Counter() {
-  const count = useSelector((state: RootState) => state.counter.value)
+
+  // global store
+  const count = useSelector((state: RootCounterState) => state.counter.value)
   const dispatch = useDispatch()
 
+  // local store
   const [incrementAmount, setIncrementAmount] = useState('2');
 
   return (

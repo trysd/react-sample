@@ -9,9 +9,15 @@
 // npm create vite
 // npm install @reduxjs/toolkit react-redux
 
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import reactLogo from './assets/react.svg'
 import './App.css'
-import { Counter } from './features/counter/Counter'
+import { Counter } from './components/counter/Counter'
+import { Animals } from './components/animals/Animals';
+import { Provider } from 'react-redux';
+import { TopWindow } from './components/top-window/TopWindow';
+import { storeAnimals } from './store/animals/store-animals';
+
 
 function App() {
 
@@ -29,9 +35,16 @@ function App() {
       <div className="card">
         <Counter />
       </div>
+      <BrowserRouter>
+        <Provider store={storeAnimals}>
+          <Animals />
+          <TopWindow />
+        </Provider>
+      </BrowserRouter>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+
     </div>
   )
 }
