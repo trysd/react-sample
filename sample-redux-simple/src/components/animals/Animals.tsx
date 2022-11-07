@@ -2,16 +2,10 @@
 import * as React from 'react';
 import { lazy } from 'react';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-// import { Cats } from '../cat/Cats'
-// import { Dogs } from '../dog/Dogs';
 
-
-
-// https://ja.reactjs.org/docs/code-splitting.html
 const CatsComponent = lazy(() => import("../cat/Cats").then(({ Cats }) => ({ default: Cats })));
 const DogsComponent = lazy(() => import("../dog/Dogs").then(({ Dogs }) => ({ default: Dogs })));
 
-// Lazy Loading は Suspense の子孫に配置する
 interface Props {}
 export const Animals: React.FC<Props> = (props) => {
 

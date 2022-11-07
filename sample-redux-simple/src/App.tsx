@@ -1,15 +1,4 @@
-
-// Vite で最速 React & TypeScript
-// https://zenn.dev/sprout2000/articles/98145cf2a807b1
-
-// Redux入門者向け初めてのRedux ToolkitとRedux Thunkの非同期処理
-// https://reffect.co.jp/react/redux-toolkit
-
-// インストール時
-// npm create vite
-// npm install @reduxjs/toolkit react-redux
-
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import reactLogo from './assets/react.svg'
 import './App.css'
 import { Counter } from './components/counter/Counter'
