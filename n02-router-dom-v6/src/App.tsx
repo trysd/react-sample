@@ -1,4 +1,3 @@
-import { BrowserRouter } from 'react-router-dom';
 import reactLogo from './assets/react.svg'
 import './App.css'
 import { Counter } from './components/counter/Counter'
@@ -24,12 +23,10 @@ function App() {
       <div className="card">
         <Counter />
       </div>
-      <BrowserRouter>
         <Provider store={storeAnimals}>
           <Animals />
           <TopWindow />
         </Provider>
-      </BrowserRouter>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
