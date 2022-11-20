@@ -5,28 +5,31 @@ import { Animals } from './components/animals/Animals';
 import { Provider } from 'react-redux';
 import { TopWindow } from './components/top-window/TopWindow';
 import { storeAnimals } from './store/animals/store-animals';
+import { Kitchen } from './service/Kitchen';
 
 
 function App() {
 
+  const kitchen_ = Kitchen.instance();
+
   return (
     <div className="App">
-      <div>
+      {/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
         <a href="https://reactjs.org" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
-      </div>
+      </div> */}
       <h1>Vite + React</h1>
       <div className="card">
         <Counter />
       </div>
-        <Provider store={storeAnimals}>
-          <Animals />
-          <TopWindow />
-        </Provider>
+      <Provider store={storeAnimals}>
+        <Animals />
+        <TopWindow />
+      </Provider>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>

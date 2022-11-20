@@ -14,7 +14,23 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+
+    // "baseUrl": "./",
+    // "sourceMap": true,
+    // "declaration": true,
+    // "downlevelIteration": true,
+    // "experimentalDecorators": true,
+    // "importHelpers": true,
+
+    // "noImplicitAny": true,
+    // "noImplicitThis": true,
+    // "alwaysStrict": true,
+    // "strictBindCallApply": true,
+    // "strictNullChecks": true,
+    // "strictFunctionTypes": true,
+    // "strictPropertyInitialization": true,
+
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
