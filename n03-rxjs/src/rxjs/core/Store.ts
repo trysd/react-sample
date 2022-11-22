@@ -1,8 +1,8 @@
-import { BehaviorSubject, Observable, pipe, queueScheduler, Subject, UnaryFunction} from 'rxjs';
-import { skip, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, pipe, queueScheduler, Subject, UnaryFunction } from 'rxjs';
+import { filter, skip, tap } from 'rxjs/operators';
 
 type LeastOne<T, K extends keyof T = keyof T> = K extends keyof T ? PartialRequire<T, K> : never;
-type NeedAtLeastOne<T> = LeastOne<{ [K in keyof T]?: T[K] }>;
+type NeedAtLeastOne<T> = LeastOne<{ [K in keyof T]?: T[K] | ((store: T[K]) => T[K]) }>;
 type PartialRequire<T, X extends keyof T> = { [K in X]-?: T[K] } & T;
 type initBase<T> = {
   readonly [K in keyof T]: {
@@ -24,25 +24,35 @@ export class Store<T> {
     this.base = base;
     Object.keys(base).forEach((k) => this.initValues[k] = this.value(k as any));
     this.ref = Object.keys(this.base).reduce((previous, current) => {
-      previous[current] = this.base[current].store.asObservable().pipe(
-        this.base[current].pipe ? this.base[current].pipe() : tap()
-      );
+      previous = {
+        ...previous, ...{
+          [current]: this.base[current].store.asObservable().pipe(
+            this.base[current].pipe
+              ? this.base[current].pipe()
+              : tap()
+          )
+        }
+      };
       return previous;
     }, {} as WrappedStore<T>);
     return this.ref;
   }
-  public next<K extends keyof T>(key: K, value: T[K]): void {
-    this.queue(key, () => value)
-  }
   reset<K extends keyof T>(): void {
     Object.keys(this.base).forEach((k) => this.queue(k as K, () => this.initValues[k]));
   }
-  states(nextStatesOptions: NeedAtLeastOne<T>): void {
-    Object.keys(nextStatesOptions).forEach((k) => this.queue(k as any, () => this.next[k]));
+  set(valOrFn: NeedAtLeastOne<T>): void {
+    Object.keys(valOrFn).forEach((k) => {
+      // this.queue(k as keyof T, valOrFn instanceof Function
+      //   ? valOrFn[k as keyof T] as (state: T[keyof T]) => T[keyof T]
+      //   : valOrFn[k as keyof T] as T[keyof T]
+      // )
+      this.queue(k as keyof T, valOrFn[k as keyof T] as T[keyof T])
+    });
   }
-  queue<K extends keyof T>(key: K, state: T[K]|((state: T[K]) => T[K])): void {
+  queue<K extends keyof T>(key: K, state: T[K] | ((state: T[K]) => T[K])): void {
     queueScheduler.schedule(() => {
-      (this.base[key].store as BehaviorSubject<T[K]>).next(state instanceof Function ? state(this.value(key) as T[K]) : state)
+      (this.base[key].store as BehaviorSubject<T[K]>)
+        .next(state instanceof Function ? state(this.value(key) as T[K]) : state)
     });
   }
   async promise<K extends keyof T>(key: K, promise: Promise<T[K]> | (() => Promise<T[K]>)): Promise<void> {
@@ -62,14 +72,17 @@ export class Store<T> {
   }
 }
 
-export interface StoreProps {
+/** 
+ * Store Sample
+ */
+export interface Test1 {
   count: string
 }
-export class StoreTest extends Store<StoreProps> {
-  private static instance: StoreTest;
-  public static getInstance(): StoreTest {
-    if (!this.instance) this.instance = new StoreTest();
-    return this.instance;
+export class Test1Store extends Store<Test1> {
+  private static _instance: Test1Store;
+  public static instance(): Test1Store {
+    if (!this._instance) this._instance = new Test1Store();
+    return this._instance;
   }
   private constructor() {
     super({
@@ -92,4 +105,38 @@ export class StoreTest extends Store<StoreProps> {
     }
     this.promise('count', new Promise((resolve) => setTimeout(() => resolve('Bom!'), 3000)))
   }
+}
+
+export interface test2 {
+  a: string | null,
+  b: number | null
+}
+export class Test2Store extends Store<test2> {
+  private constructor() {
+    super({
+      a: { store: new BehaviorSubject(null), pipe: () => pipe(filter(f => f !== null)) },
+      b: { store: new BehaviorSubject(null), pipe: () => pipe(filter(f => f !== null)) }
+    })
+    this.test();
+  }
+  private static _instance: Test2Store;
+  public static instance(): Test2Store {
+    if (!this._instance) this._instance = new Test2Store();
+    return this._instance;
+  }
+  test(): void {
+    this.stream.a.subscribe(e => console.log(e));
+    this.stream.b.subscribe(e => console.log(e));
+    this.set({
+      a: "ready!",
+      b: -1
+    });
+    ([0, 0, 0]).forEach((_: any) => {
+      this.set({
+        a: (s) => (s || '') + "⇨",
+        b: (s) => (s || 0) + 1
+      })
+    });
+  }
+
 }

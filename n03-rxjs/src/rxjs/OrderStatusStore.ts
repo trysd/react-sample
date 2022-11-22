@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { Menu } from 'src/class/Menu';
+import { Menu } from '../class/Menu';
 import { Store } from './core/Store';
 
 export interface Status {

@@ -41,7 +41,9 @@ export class Kitchen {
     });
 
     // test order
-    this.notice_.next("order", [Menu.Curry, Menu.Pasta]);
+    this.notice_.set({
+      "order": [Menu.Curry, Menu.Pasta]
+    });
   }
 
   
