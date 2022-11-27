@@ -42,10 +42,6 @@ export class Store<T> {
   }
   set(valOrFn: NeedAtLeastOne<T>): void {
     Object.keys(valOrFn).forEach((k) => {
-      // this.queue(k as keyof T, valOrFn instanceof Function
-      //   ? valOrFn[k as keyof T] as (state: T[keyof T]) => T[keyof T]
-      //   : valOrFn[k as keyof T] as T[keyof T]
-      // )
       this.queue(k as keyof T, valOrFn[k as keyof T] as T[keyof T])
     });
   }
@@ -53,6 +49,15 @@ export class Store<T> {
     queueScheduler.schedule(() => {
       (this.base[key].store as BehaviorSubject<T[K]>)
         .next(state instanceof Function ? state(this.value(key) as T[K]) : state)
+    });
+  }
+  merge<K extends keyof T>(key: K, state: T[K]): void {
+    if (state instanceof Object) queueScheduler.schedule(() => {
+      (this.base[key].store as BehaviorSubject<T[K]>)
+        .next({
+          ...this.value(key),
+          ...state
+        })
     });
   }
   async promise<K extends keyof T>(key: K, promise: Promise<T[K]> | (() => Promise<T[K]>)): Promise<void> {
@@ -71,6 +76,57 @@ export class Store<T> {
     return this.ref;
   }
 }
+
+export interface test {
+  obj: {
+    [keys: string]: {
+      name: string,
+      age: number
+    }
+  }
+} 
+export class TestStore extends Store<test> {
+  private static _instance: TestStore;
+  public static instance(): TestStore {
+    if (!this._instance) this._instance = new TestStore();
+    return this._instance;
+  }
+  private constructor() {
+    super({
+      obj: {
+        store: new BehaviorSubject({}),
+        pipe: () => pipe(skip(1))
+      }
+    });
+    this.test();
+  }
+  test(): void {
+
+    console.log("test..")
+    this.stream.obj.pipe().subscribe(e => console.log(e))
+    
+    this.merge('obj', {
+      "aaa": {
+        name: "is aaa",
+        age: 22
+      },
+      "bbb": {
+        name: "is bbb",
+        age: 32
+      }
+    });
+
+    this.merge('obj', {
+      "aaa": {
+        name: "is changed aaa",
+        age: 23
+      }
+    })
+
+  }
+}
+
+
 
 /** 
  * Store Sample

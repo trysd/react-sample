@@ -20,3 +20,4 @@ export const Menu = {
     ]
   }
 } as const;
+export type Menu = typeof Menu[keyof typeof Menu]

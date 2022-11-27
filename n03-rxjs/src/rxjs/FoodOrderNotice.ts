@@ -1,9 +1,9 @@
 import { Subject } from 'rxjs';
-import { Menu } from 'src/class/Menu';
+import { Menu } from '../class/Menu';
 import { Store } from './core/Store';
 
 export interface FoodOrder {
-  order: typeof Menu[keyof typeof Menu][]
+  order: Menu[] // typeof Menu[keyof typeof Menu][]
 }
 
 export class FoodOrderNotice extends Store<FoodOrder> {

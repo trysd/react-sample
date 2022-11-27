@@ -2,20 +2,23 @@ import { BehaviorSubject } from 'rxjs';
 import { Menu } from '../class/Menu';
 import { Store } from './core/Store';
 
-export interface Status {
-  menu: typeof Menu[keyof typeof Menu]
-  progress: number
+
+
+export interface order {
+  order: {
+    [keys: string]: {
+      menu: Menu, // typeof Menu[keyof typeof Menu],
+      progress: number,
+      id: string
+    }
+  }
 }
 
-export interface OrderStatus {
-  status: Status[]
-}
-
-export class OrderStatusStore extends Store<OrderStatus> {
+export class OrderStatusStore extends Store<order> {
   private constructor() {
     super({
-      status: {
-        store: new BehaviorSubject([])
+      order: {
+        store: new BehaviorSubject({})
       }
     })
   }

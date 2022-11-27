@@ -1,23 +1,23 @@
 export const Process = {
   CutVegetables: {
     label: '野菜をカット',
-    timeItTakes: 1000,
+    timeItTakes: 800,
   },
   CutMeet: {
     label: '肉をカット',
-    timeItTakes: 1000,
+    timeItTakes: 800,
   },
   StirFry: {
     label: '炒める',
-    timeItTakes: 2000,
+    timeItTakes: 800,
   },
   Simmer: {
     label: '煮込む',
-    timeItTakes: 5000,
+    timeItTakes: 1300,
   },
   boil: {
     label: '茹でる',
-    timeItTakes: 3000,
+    timeItTakes: 2000,
   },
   putSauceOn: {
     label: 'ソースをかける',
@@ -25,7 +25,7 @@ export const Process = {
   },
   DishUp: {
     label: '盛り付け',
-    timeItTakes: 3000
+    timeItTakes: 1000
   }
 } as const;
 type Process = typeof Process[keyof typeof Process];

@@ -5,14 +5,12 @@ import { Provider } from 'react-redux';
 import { TopWindow } from './components/top-window/TopWindow';
 import { storeAnimals } from './store/animals/store-animals';
 import { Kitchen } from './service/Kitchen';
-import { Test1Store, Test2Store } from './rxjs/core/Store';
+import { TestStore } from './rxjs/core/Store';
 
 function App() {
 
   const kitchen_ = Kitchen.instance();
-
-  // Test1Store.instance();
-  // Test2Store.instance();
+  // TestStore.instance();
 
   return (
     <div className="App">
