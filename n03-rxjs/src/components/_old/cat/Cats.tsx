@@ -1,6 +1,6 @@
-import type { RootAnimalsState } from '../../store/animals/store-animals'
+import type { RootAnimalsState } from '../../../store/animals/store-animals'
 import { useSelector, useDispatch } from 'react-redux'
-import { setCatName  } from '../../store/animals/slice-animals';
+import { setCatName  } from '../../../store/animals/slice-animals';
 import { useState } from 'react';
 import styles from './Cats.module.css'
 

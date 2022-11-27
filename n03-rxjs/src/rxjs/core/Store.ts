@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable, pipe, queueScheduler, Subject, UnaryFunction } from 'rxjs';
-import { filter, skip, tap } from 'rxjs/operators';
+import { skip, tap } from 'rxjs/operators';
 
 type LeastOne<T, K extends keyof T = keyof T> = K extends keyof T ? PartialRequire<T, K> : never;
 type NeedAtLeastOne<T> = LeastOne<{ [K in keyof T]?: T[K] | ((store: T[K]) => T[K]) }>;
@@ -83,7 +83,8 @@ export interface test {
       name: string,
       age: number
     }
-  }
+  },
+  count: string
 } 
 export class TestStore extends Store<test> {
   private static _instance: TestStore;
@@ -96,6 +97,9 @@ export class TestStore extends Store<test> {
       obj: {
         store: new BehaviorSubject({}),
         pipe: () => pipe(skip(1))
+      },
+      count: {
+        store: new BehaviorSubject("")
       }
     });
     this.test();
@@ -121,38 +125,15 @@ export class TestStore extends Store<test> {
         name: "is changed aaa",
         age: 23
       }
-    })
-
-  }
-}
-
-
-
-/** 
- * Store Sample
- */
-export interface Test1 {
-  count: string
-}
-export class Test1Store extends Store<Test1> {
-  private static _instance: Test1Store;
-  public static instance(): Test1Store {
-    if (!this._instance) this._instance = new Test1Store();
-    return this._instance;
-  }
-  private constructor() {
-    super({
-      count: {
-        store: new BehaviorSubject(".."),
-        pipe: () => pipe(skip(1))
-      }
     });
-    this.test();
-  }
-  async test() {
-    this.stream.count.subscribe(e => {
-      console.log(e)
+
+    this.queue('obj', (store) => {
+      delete store['aaa']
+      return store;
     });
+
+    this.stream.count.pipe(skip(1)).subscribe(e => console.log(e));
+
     for (const i in [0, 1, 2]) {
       this.promise('count', async () => {
         await new Promise(resolve => setTimeout(resolve, (3000 - 1000 * parseInt(i))))
@@ -160,39 +141,6 @@ export class Test1Store extends Store<Test1> {
       });
     }
     this.promise('count', new Promise((resolve) => setTimeout(() => resolve('Bom!'), 3000)))
-  }
-}
 
-export interface test2 {
-  a: string | null,
-  b: number | null
-}
-export class Test2Store extends Store<test2> {
-  private constructor() {
-    super({
-      a: { store: new BehaviorSubject(null), pipe: () => pipe(filter(f => f !== null)) },
-      b: { store: new BehaviorSubject(null), pipe: () => pipe(filter(f => f !== null)) }
-    })
-    this.test();
   }
-  private static _instance: Test2Store;
-  public static instance(): Test2Store {
-    if (!this._instance) this._instance = new Test2Store();
-    return this._instance;
-  }
-  test(): void {
-    this.stream.a.subscribe(e => console.log(e));
-    this.stream.b.subscribe(e => console.log(e));
-    this.set({
-      a: "ready!",
-      b: -1
-    });
-    ([0, 0, 0]).forEach((_: any) => {
-      this.set({
-        a: (s) => (s || '') + "⇨",
-        b: (s) => (s || 0) + 1
-      })
-    });
-  }
-
 }

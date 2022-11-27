@@ -1,8 +1,8 @@
-import { OrderStatusStore } from './../rxjs/OrderStatusStore';
+import { OrderRequestStore } from '../rxjs/OrderStore';
 
 import { Menu } from "../class/Menu";
 import { FoodOrderNotice as FoodOrderNotice } from "../rxjs/FoodOrderNotice";
-import { filter, pairwise, take } from 'rxjs';
+import { filter, take } from 'rxjs';
 
 export class Kitchen {
   private static _instance: Kitchen;
@@ -10,9 +10,16 @@ export class Kitchen {
     // start
     this.startAcceptingOrders();
     // order(test)
-    this._notice.set({
-      "order": [Menu.Curry, Menu.Pasta]
-    });
+    setTimeout(() => {
+      this._notice.set({
+        // "order": [Menu.Curry, Menu.Pasta, Menu.Curry, Menu.Pasta]
+        order: [
+          { menu: Menu.Curry, customerId: "test" },
+          { menu: Menu.Pasta, customerId: "test" },
+          { menu: Menu.Curry, customerId: "test" },
+        ]
+      });
+    }, 500);
   }
   public static instance(): Kitchen {
     if (!this._instance) this._instance = new Kitchen();
@@ -20,50 +27,23 @@ export class Kitchen {
   }
 
   private _notice: FoodOrderNotice = FoodOrderNotice.instance();
-  private _order: OrderStatusStore = OrderStatusStore.instance();
+  private _order: OrderRequestStore = OrderRequestStore.instance();
 
   private startAcceptingOrders(): void {
 
-    // cooking status observer.
-    // Samples received on the "component side".
-    this._order.stream.order.pipe(
-      pairwise()
-    ).subscribe(([prev, curr]) => {
+    const maxNumberOfCooks = 2;
 
-      // detect start
-      Object.keys(curr).forEach(
-        f => {
-          if (curr[f] !== undefined && prev[f] === undefined) {
-            console.log("#start: " + curr[f].menu.name + " - " + curr[f].id)
-          }
-        }
-      );
-
-      // detect progress
-      const progressList = Object.keys(curr).filter(
-        f => JSON.stringify(curr[f]) !== JSON.stringify(prev[f])
-      ).map(key => curr[key]);
-      progressList.forEach(
-        x => {
-          console.log(x.menu.name + `(${x.progress})` + ' - ' + x.menu.process[x.progress].label);
-        }
-      );
-
-      // detect compleat
-      Object.keys(prev).forEach(
-        f => {
-          if (curr[f] === undefined && prev[f] !== undefined) {
-            console.log("#compleat: " + prev[f].menu.name + " - " + prev[f].id)
-          }
-        }
-      );
-    })
+    const kitchenQueue = [];
 
     // detect order notice
     this._notice.stream.order.subscribe(order => {
-
       // Process for each menu
-      order.forEach(f => {
+      order.forEach(x => {
+
+        const f = x.menu;
+
+        // ここでqueueに
+
 
         // Determine the ID first
         const id = Math.random().toString(32).substring(2)
@@ -101,6 +81,8 @@ export class Kitchen {
 
     // Cook recursively.
     const cooking = (progress: number, menu: Menu = obj.menu) => {
+
+      // Overwrite using merge
       this._order.merge('order', {
         [id]: {
           menu,
@@ -114,10 +96,12 @@ export class Kitchen {
           cooking(++progress)
         }, menu.process[progress].timeItTakes);
       } else {
-        this._order.queue('order', (store) => {
-          delete store[id];
-          return store;
-        })
+        setTimeout(() => {
+          this._order.queue('order', (store) => {
+            delete store[id];
+            return store;
+          });
+        }, 1300);
       }
     }
     cooking(obj.progress)

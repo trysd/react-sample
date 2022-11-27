@@ -3,7 +3,9 @@ import { Process } from "./Process";
 export const Menu = {
   Curry: {
     name: 'Curry',
+    price: 50,
     process: [
+      Process.PrepareIngredients,
       Process.CutVegetables,
       Process.CutMeet,
       Process.StirFry,
@@ -13,7 +15,9 @@ export const Menu = {
   },
   Pasta: {
     name: 'Pasta',
+    price: 75,
     process: [
+      Process.PrepareIngredients,
       Process.boil,
       Process.putSauceOn,
       Process.DishUp

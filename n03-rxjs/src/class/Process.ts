@@ -1,4 +1,15 @@
-export const Process = {
+interface process {
+  [keys: string]: {
+    label: string,
+    timeItTakes: number,
+  }
+}
+
+export const Process: process = {
+  PrepareIngredients: {
+    label: '材料を準備',
+    timeItTakes: 1300,
+  },
   CutVegetables: {
     label: '野菜をカット',
     timeItTakes: 800,
@@ -25,7 +36,7 @@ export const Process = {
   },
   DishUp: {
     label: '盛り付け',
-    timeItTakes: 1000
+    timeItTakes: 3000
   }
 } as const;
 type Process = typeof Process[keyof typeof Process];

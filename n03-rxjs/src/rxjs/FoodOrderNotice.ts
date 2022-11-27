@@ -3,7 +3,11 @@ import { Menu } from '../class/Menu';
 import { Store } from './core/Store';
 
 export interface FoodOrder {
-  order: Menu[] // typeof Menu[keyof typeof Menu][]
+  // order: Menu[]
+  order: {
+    menu: Menu,
+    customerId: string
+  }[];
 }
 
 export class FoodOrderNotice extends Store<FoodOrder> {
