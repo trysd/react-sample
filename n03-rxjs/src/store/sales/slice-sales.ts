@@ -1,12 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
+export interface numberOfMenu {
+  [keys: string]: {
+    order: number
+  }
+}
+
 export interface SalesState {
-  value: number
+  value: number,
+  numberOfMenu: numberOfMenu
 }
 
 const initialState: SalesState = {
   value: 0,
+  numberOfMenu: {}
 }
 
 export const salesSlice = createSlice({
@@ -15,12 +23,22 @@ export const salesSlice = createSlice({
   reducers: {
     addSales: (state, sales: PayloadAction<number>) => {
       state.value += sales.payload
+    },
+    incrementOrderMenu: (state, menuName: PayloadAction<string>) => {
+      // console.log(menuName.payload)
+      if (state.numberOfMenu[menuName.payload] == undefined) {
+        state.numberOfMenu[menuName.payload] = {
+          order: 0
+        }
+      }
+      ++state.numberOfMenu[menuName.payload].order
+      // console.log(++state.numberOfMenu[menuName.payload].order)
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addSales } = salesSlice.actions
+export const { addSales, incrementOrderMenu } = salesSlice.actions
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This

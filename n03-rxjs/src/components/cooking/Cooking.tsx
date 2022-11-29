@@ -17,7 +17,6 @@ export const Cooking: React.FC<Props> = (props) => {
   return (
     <div className={styles.main}>
 
-
       <div className={styles.mini}>id: {props.cooking.id}, customerId: {props.cooking.customerId}</div>
 
       <div className={styles.menuName}>{props.cooking.name}</div>

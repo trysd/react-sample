@@ -8,7 +8,7 @@ import styles from './DiningHall.module.scss';
 
 import type { RootSalesState } from '../../store/sales/store-sales'
 import { useSelector, useDispatch } from 'react-redux'
-import { addSales } from '../../store/sales/slice-sales'
+import { addSales, incrementOrderMenu } from '../../store/sales/slice-sales'
 
 export const DiningHall = () => {
 
@@ -27,7 +27,6 @@ export const DiningHall = () => {
 
   let numberOfVisitor = 0;
 
-  // 
   useEffect(() => {
     // constructive
 
@@ -48,6 +47,7 @@ export const DiningHall = () => {
           numberOfVisitor--;
           // payment
           dispatch(addSales(f.menu.price));
+          dispatch(incrementOrderMenu(f.menu.name));
         }, import.meta.env.VITE_EATING_TIME);
 
       });
