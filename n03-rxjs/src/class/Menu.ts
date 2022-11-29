@@ -1,6 +1,15 @@
 import { Process } from "./Process";
 
-export const Menu = {
+export const Menu: {
+  [keys: string]: {
+    name: string,
+    price: number,
+    process: {
+      label: string,
+      timeItTakes: number
+    }[]
+  }
+} = {
   Curry: {
     name: 'Curry',
     price: 50,
@@ -22,6 +31,17 @@ export const Menu = {
       Process.putSauceOn,
       Process.DishUp
     ]
+  },
+  gratin: {
+    name: 'gratin',
+    price: 95,
+    process: [
+      Process.PrepareIngredients,
+      Process.putRiceOn,
+      Process.putCheeseOn,
+      Process.OvenBake,
+      Process.DishUp
+    ]
   }
-} as const;
+};
 export type Menu = typeof Menu[keyof typeof Menu]

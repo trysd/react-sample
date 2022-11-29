@@ -9,17 +9,6 @@ export class Kitchen {
   private constructor() {
     // start
     this.startAcceptingOrders();
-    // order(test)
-    setTimeout(() => {
-      this._notice.set({
-        // "order": [Menu.Curry, Menu.Pasta, Menu.Curry, Menu.Pasta]
-        order: [
-          { menu: Menu.Curry, customerId: "test" },
-          { menu: Menu.Pasta, customerId: "test" },
-          { menu: Menu.Curry, customerId: "test" },
-        ]
-      });
-    }, 500);
   }
   public static instance(): Kitchen {
     if (!this._instance) this._instance = new Kitchen();
@@ -28,22 +17,26 @@ export class Kitchen {
 
   private _notice: FoodOrderNotice = FoodOrderNotice.instance();
   private _order: OrderRequestStore = OrderRequestStore.instance();
+  private numberOfCooking = 0;
 
   private startAcceptingOrders(): void {
 
-    const maxNumberOfCooks = 2;
-
-    const kitchenQueue = [];
+    const maxNumberOfCooks = import.meta.env.VITE_MAX_COOKING;
 
     // detect order notice
     this._notice.stream.order.subscribe(order => {
       // Process for each menu
-      order.forEach(x => {
+      order.forEach(async notice => {
+        const menu = notice.menu;
 
-        const f = x.menu;
-
-        // ここでqueueに
-
+        // wait for a chef
+        while (true) {
+          if (this.numberOfCooking < maxNumberOfCooks) {
+            break;
+          }
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        this.numberOfCooking++;
 
         // Determine the ID first
         const id = Math.random().toString(32).substring(2)
@@ -63,9 +56,10 @@ export class Kitchen {
             ...store,
             ...{
               [id]: {
-                menu: f,
+                menu: menu,
                 progress: 0,
-                id: id
+                id: id,
+                customerId: notice.customerId
               }
             }
           }
@@ -87,7 +81,8 @@ export class Kitchen {
         [id]: {
           menu,
           progress,
-          id
+          id,
+          customerId: obj.customerId
         }
       })
 
@@ -96,11 +91,13 @@ export class Kitchen {
           cooking(++progress)
         }, menu.process[progress].timeItTakes);
       } else {
+
         setTimeout(() => {
           this._order.queue('order', (store) => {
             delete store[id];
             return store;
           });
+          this.numberOfCooking--;
         }, 1300);
       }
     }

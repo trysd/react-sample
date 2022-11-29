@@ -2,12 +2,14 @@ import { Subject } from 'rxjs';
 import { Menu } from '../class/Menu';
 import { Store } from './core/Store';
 
+export interface FoodOrderCore {
+  menu: Menu,
+  customerId: string
+}
+
 export interface FoodOrder {
   // order: Menu[]
-  order: {
-    menu: Menu,
-    customerId: string
-  }[];
+  order: FoodOrderCore[];
 }
 
 export class FoodOrderNotice extends Store<FoodOrder> {

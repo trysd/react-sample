@@ -3,7 +3,7 @@ import * as React from 'react';
 import { lazy, Suspense } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import { DiningHall } from '../dining-hall';
-import styles from './Restaurant.module.css'
+import styles from './Restaurant.module.scss'
 
 // const DiningHallComponent = lazy(() => import("../dining-hall").then(({ DiningHall }) => ({ default: DiningHall })));
 const KitchenComponent = lazy(() => import("../kitchen").then(({ Kitchen }) => ({ default: Kitchen })));
@@ -15,15 +15,8 @@ export const Restaurant: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <h3>Restaurant</h3>
-      <div>open | close</div>
       <DiningHall />
       <Routes>
-        {/* <Route path="*" element={
-          <Suspense fallback={<div>Loading dining hall...</div>}>
-            <DiningHallComponent />
-          </Suspense>
-        } /> */}
         <Route path="/kitchen" element={
           <Suspense fallback={<div>Loading kitchen...</div>}>
             <KitchenComponent />
@@ -31,10 +24,10 @@ export const Restaurant: React.FC<Props> = (props) => {
         } />
       </Routes>
 
-      <p>
+      <div className={styles.links}>
         <span><Link to='/'>Back To Top</Link> | </span>
-        <span><Link to='/kitchen'>peek into the kitchen</Link></span>
-      </p>
+        <span><Link to='/kitchen'>Peek into the kitchen</Link></span>
+      </div>
 
     </div>
   );

@@ -1,18 +1,39 @@
 .main {
-  width: 380px;
+  position: relative;
   margin-bottom:8px;
 
   .mini {
-    font-size: 10px;
     text-align: left;
+    font-size: 10px;
   }
-  
-  .textBox {
-    line-height: 138%;
-    font-size: 24px;
+
+  .menuName {
+    text-align: left;
+    font-size: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
     color: rgb(0, 255, 238);
-    background: rgb(23, 23, 23);
-    padding: 4px;
+  }
+
+  .chefBox {
+    width: 380px;
+    height: 42px;
+    background: rgb(44, 44, 44);
+    position: relative;
+
+    .ChefIconWrapper {
+      position: absolute;
+      top: 4px;
+      left: 6px;
+    }
+
+    .textBox {
+      padding-top: 10px;
+      font-size:18px;
+      color: rgb(0, 255, 238);
+    }
+
   }
 
 }

@@ -1,6 +1,9 @@
 import './App.css'
 import { Provider } from 'react-redux';
-import { storeAnimals } from './store/animals/store-animals';
+
+// import { storeAnimals } from './store/animals/store-animals';
+import { storeSales } from './store/sales/store-sales';
+
 import { Kitchen } from './service/Kitchen';
 import { TestStore } from './rxjs/core/Store';
 import { Restaurant } from './components/restaurant/';
@@ -13,11 +16,11 @@ function App() {
   return (
     <div className="App">
 
-      <Provider store={storeAnimals}>
+      <Provider store={storeSales}>
         <Restaurant />
       </Provider>
       <p className="read-the-docs">
-        Order food 
+        Order food
       </p>
 
     </div>

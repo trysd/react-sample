@@ -18,7 +18,7 @@ export const Cats = () => {
       <h2>Cats: {animals.catName}</h2>
       <div>
         <input
-          className={styles.textbox}
+          className={styles.textBox}
           aria-label="cat name"
           value={nameInput}
           onChange={e => setNameInput(e.target.value)}

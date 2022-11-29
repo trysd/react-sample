@@ -2,77 +2,68 @@ import { useEffect, useState } from 'react';
 import { OrderRequestStore, ProgressType } from '../../rxjs/OrderStore';
 import { pairwise, Subscription } from 'rxjs';
 import { Cooking } from '../cooking/';
-import styles from './Kitchen.module.css';
-
-type CookingX = {
-  [keys: string]: {
-    name: string;
-    label: string;
-    id: string
-  }
-};
+import { CookingX } from '../cooking/Cooking';
+// import styles from './Kitchen.module.css';
 
 export const Kitchen = () => {
 
   // local store
-  const [cooking2, setCooking2] = useState<CookingX>({});
+  const [cooking, setCooking] = useState<CookingX>({});
 
   // global store
   const _orderStatus = OrderRequestStore.instance();
-  let orderStatus$: Subscription | null = null;
+  let orderStatus$: Subscription;
 
   useEffect(() => {
     // constructive
-    let nextView2: CookingX = {} as any;
+
+    // 
+    let cookingLocal: CookingX = {} as any;
 
     orderStatus$ = _orderStatus.stream.order.pipe(
       pairwise()
     ).subscribe(([prev, curr]) => {
 
-      const nextView: { name: string; id: string }[] = [];
-
-      _orderStatus.orderStatusExtractor2(prev, curr).forEach(f => {
+      _orderStatus.orderStatusExtractor(prev, curr).forEach(f => {
         // console.log(f)
-        nextView2 = {
-          ...nextView2,
+        cookingLocal = {
+          ...cookingLocal,
           ...{
             [f.id]: {
               name: f.name,
               label: f.label || '',
-              id: f.id
+              id: f.id,
+              customerId: f.customerId
             }
           }
         };
-        setCooking2(nextView2)
 
-        // 個々の処理
-        switch (f.progressType) {
-          case (ProgressType.Compleat):
-            delete nextView2[f.id]; // "盛り付け"が瞬時に消えてしまう
+        // compleat
+        if (f.progressType === ProgressType.Compleat) {
+          delete cookingLocal[f.id]; 
         }
+
+        setCooking(cookingLocal)
       });
     })
     return () => {
       // destructive
-      (orderStatus$ as Subscription).unsubscribe();
+      orderStatus$.unsubscribe();
     };
   }, [])
 
   return (
     <div>
       <h2>Kitchen:</h2>
+      <p>Maximum number of cooks: { import.meta.env.VITE_MAX_COOKING }</p>
       <div>
         {
-          Object.keys(cooking2).map(
-            k => <Cooking 
-              key={cooking2[k].id}
-              name={cooking2[k].name}
-              label={cooking2[k].label}
-              id={cooking2[k].id} />
+          Object.keys(cooking).map(
+            k => <Cooking key={cooking[k].id} cooking={cooking[k]} />
           )
         }
         {
-          Object.keys(cooking2).length == 0 && <div>waiting for order..</div>
+          Object.keys(cooking).length == 0 && <div>waiting for order..</div>
         }
       </div>
     </div>

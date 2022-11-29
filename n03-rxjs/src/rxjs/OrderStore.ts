@@ -9,17 +9,30 @@ export const ProgressType = {
 } as const;
 type ProgressType = typeof ProgressType[keyof typeof ProgressType];
 
-export interface order {
-  order: {
-    [keys: string]: {
-      menu: Menu,
-      progress: number,
-      id: string
-    }
+export interface orderCore {
+  [keys: string]: {
+    menu: Menu,
+    progress: number,
+    id: string,
+    customerId: string
   }
 }
 
+// interface for this store
+export interface order {
+  order: orderCore
+}
+
+interface orderProgress {
+  progressType: ProgressType,
+  name: string,
+  label: string | null,
+  id: string,
+  customerId: string
+}
+
 export class OrderRequestStore extends Store<order> {
+  // store define
   private constructor() {
     super({
       order: {
@@ -27,62 +40,17 @@ export class OrderRequestStore extends Store<order> {
       }
     })
   }
+  // singleton support
   private static _instance: OrderRequestStore;
   public static instance(): OrderRequestStore {
     if (!this._instance) this._instance = new OrderRequestStore();
     return this._instance;
   }
 
-  // Extraction example of specific processing "start, progress, end" set for each class
-  public orderStatusExtractor(prev: order['order'], curr: order['order']): string[] {
+  // Extraction example of specific processing "start, progress, compleat" set for each class
+  public orderStatusExtractor(prev: order['order'], curr: order['order']): orderProgress[] {
 
-    const statusList: string[] = []
-
-    // detect start
-    Object.keys(curr).forEach(
-      f => {
-        if (curr[f] !== undefined && prev[f] === undefined) {
-          statusList.push("#start: " + curr[f].menu.name + " - " + curr[f].id);
-        }
-      }
-    );
-
-    // detect progress
-    const progressList = Object.keys(curr).filter(
-      f => JSON.stringify(curr[f]) !== JSON.stringify(prev[f])
-    ).map(key => curr[key]);
-    progressList.forEach(
-      p => {
-        statusList.push(p.menu.name + `(${p.progress})` + ' - ' + p.menu.process[p.progress].label);
-      }
-    );
-
-    // detect compleat
-    Object.keys(prev).forEach(
-      f => {
-        if (curr[f] === undefined && prev[f] !== undefined) {
-          statusList.push("#compleat: " + prev[f].menu.name + " - " + prev[f].id)
-        }
-      }
-    );
-
-    return statusList;
-  }
-
-  // Extraction example of specific processing "start, progress, end" set for each class
-  public orderStatusExtractor2(prev: order['order'], curr: order['order']): {
-    progressType: ProgressType,
-    name: string,
-    label: string | null,
-    id: string
-  }[] {
-
-    const statusList: {
-      progressType: ProgressType,
-      name: string,
-      label: string | null,
-      id: string
-    }[] = []
+    const statusList: orderProgress[] = []
 
     // detect start
     Object.keys(curr).forEach(
@@ -92,7 +60,8 @@ export class OrderRequestStore extends Store<order> {
             progressType: ProgressType.Start,
             name: curr[f].menu.name,
             label: null,
-            id: curr[f].id
+            id: curr[f].id,
+            customerId: curr[f].customerId
           });
         }
       }
@@ -103,12 +72,13 @@ export class OrderRequestStore extends Store<order> {
       f => JSON.stringify(curr[f]) !== JSON.stringify(prev[f])
     ).map(key => curr[key]);
     progressList.forEach(
-      x => {
+      f => {
         statusList.push({
           progressType: ProgressType.CookingNow,
-          name: x.menu.name,
-          label: x.menu.process[x.progress].label,
-          id: x.id
+          name: f.menu.name,
+          label: f.menu.process[f.progress].label,
+          id: f.id,
+          customerId: f.customerId
         });
       }
     );
@@ -121,7 +91,8 @@ export class OrderRequestStore extends Store<order> {
             progressType: ProgressType.Compleat,
             name: prev[f].menu.name,
             label: null,
-            id: prev[f].id
+            id: prev[f].id,
+            customerId: prev[f].customerId
           });
         }
       }
@@ -129,4 +100,28 @@ export class OrderRequestStore extends Store<order> {
 
     return statusList;
   }
+
+  // Extraction example of specific processing "compleat" set for each class
+  public compleatExtractor(prev: order['order'], curr: order['order']): orderProgress[] {
+
+    const statusList: orderProgress[] = []
+
+    // detect compleat
+    Object.keys(prev).forEach(
+      f => {
+        if (curr[f] === undefined && prev[f] !== undefined) {
+          statusList.push({
+            progressType: ProgressType.Compleat,
+            name: prev[f].menu.name,
+            label: null,
+            id: prev[f].id,
+            customerId: prev[f].customerId
+          });
+        }
+      }
+    );
+
+    return statusList;
+  }
+
 }

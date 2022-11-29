@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import type { RootCounterState } from '../../../store/store-counter'
+import type { RootCounterState } from '../../../store/counter/store-counter'
 import { useSelector, useDispatch } from 'react-redux'
 import { decrement, increment, incrementAsync, incrementByAmount } from '../../../store/counter/slice-counter'
 import styles from './Counter.module.css'
@@ -34,7 +34,7 @@ export function Counter() {
     </div>
     <div className={styles.row}>
       <input
-        className={styles.textbox}
+        className={styles.textBox}
         aria-label="Set increment amount"
         value={incrementAmount}
         onChange={e => setIncrementAmount(e.target.value)}
