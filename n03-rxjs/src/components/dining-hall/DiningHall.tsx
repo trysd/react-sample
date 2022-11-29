@@ -46,9 +46,8 @@ export const DiningHall = () => {
           delete visitorLocal[f.customerId]
           setVisitorX({ ...visitorLocal })
           numberOfVisitor--;
-
-          // dispatch(addSales(123));
-
+          // payment
+          dispatch(addSales(f.menu.price));
         }, import.meta.env.VITE_EATING_TIME);
 
       });

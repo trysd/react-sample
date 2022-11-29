@@ -30,7 +30,7 @@ export const Kitchen = () => {
           ...cookingLocal,
           ...{
             [f.id]: {
-              name: f.name,
+              name: f.menu.name,
               label: f.label || '',
               id: f.id,
               customerId: f.customerId

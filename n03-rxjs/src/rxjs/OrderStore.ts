@@ -25,7 +25,7 @@ export interface order {
 
 interface orderProgress {
   progressType: ProgressType,
-  name: string,
+  menu: Menu,
   label: string | null,
   id: string,
   customerId: string
@@ -58,7 +58,7 @@ export class OrderRequestStore extends Store<order> {
         if (curr[f] !== undefined && prev[f] === undefined) {
           statusList.push({
             progressType: ProgressType.Start,
-            name: curr[f].menu.name,
+            menu: curr[f].menu,
             label: null,
             id: curr[f].id,
             customerId: curr[f].customerId
@@ -75,7 +75,7 @@ export class OrderRequestStore extends Store<order> {
       f => {
         statusList.push({
           progressType: ProgressType.CookingNow,
-          name: f.menu.name,
+          menu: f.menu,
           label: f.menu.process[f.progress].label,
           id: f.id,
           customerId: f.customerId
@@ -89,7 +89,7 @@ export class OrderRequestStore extends Store<order> {
         if (curr[f] === undefined && prev[f] !== undefined) {
           statusList.push({
             progressType: ProgressType.Compleat,
-            name: prev[f].menu.name,
+            menu: prev[f].menu,
             label: null,
             id: prev[f].id,
             customerId: prev[f].customerId
@@ -112,7 +112,7 @@ export class OrderRequestStore extends Store<order> {
         if (curr[f] === undefined && prev[f] !== undefined) {
           statusList.push({
             progressType: ProgressType.Compleat,
-            name: prev[f].menu.name,
+            menu: prev[f].menu,
             label: null,
             id: prev[f].id,
             customerId: prev[f].customerId
