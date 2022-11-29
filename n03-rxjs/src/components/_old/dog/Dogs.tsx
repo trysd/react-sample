@@ -1,6 +1,6 @@
-import type { RootAnimalsState } from '../../store/animals/store-animals'
+import type { RootAnimalsState } from '../../../store/animals/store-animals'
 import { useSelector, useDispatch } from 'react-redux'
-import { setDogName  } from '../../store/animals/slice-animals';
+import { setDogName  } from '../../../store/animals/slice-animals';
 import { useState } from 'react';
 import styles from './Dogs.module.css'
 
@@ -18,7 +18,7 @@ export const Dogs = () => {
       <h2>Dogs: {animals.dogName}</h2>
       <div>
         <input
-          className={styles.textbox}
+          className={styles.textBox}
           aria-label="dog name"
           value={nameInput}
           onChange={e => setNameInput(e.target.value)}

@@ -1,0 +1,13 @@
+.main {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+
+  .visitorList {
+    display: flex;
+  }
+  
+  .textBox {
+    font-size: 16px;
+  }
+}
