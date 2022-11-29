@@ -1,10 +1,11 @@
 import './App.css'
-import { HomeComponent } from 'components/home/Home'
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
   return (
     <div className="App">
-      <HomeComponent />
+      <p>Vite + React</p>
+      { uuidv4() }
     </div>
   )
 }

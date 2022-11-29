@@ -19,12 +19,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'src/': path.join(__dirname, './src/'),
-      "components": path.resolve(__dirname, "./src/components"),
-      "service": path.resolve(__dirname, "./src/service"),
-      "class": path.resolve(__dirname, "./src/class"),
-      "interface": path.resolve(__dirname, "./src/interface"),
-      "states": path.resolve(__dirname, "./src/states"),
+      '@/': path.join(__dirname, './src/'),
     },
   },
 
