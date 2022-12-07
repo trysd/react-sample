@@ -1,9 +1,13 @@
-import styles from './Login.module.scss';
+import { css } from "@emotion/react";
 
 export const LoginComponent = () => {
   return (
-    <div className={styles.root}>
+    <div css={rootStyle}>
       <h1>Login</h1>
     </div>
   );
 };
+
+const rootStyle = css`
+  color: #ed4134
+`;
