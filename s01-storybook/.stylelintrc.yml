@@ -1,9 +1,9 @@
 plugins: stylelint-prettier
 
-extends: 
+extends:
   - stylelint-config-standard
   - stylelint-config-prettier
-overrides: 
+overrides:
   - files:
-    - 'src/**/*.{ts,tsx}'
+      - 'src/**/*.{ts,tsx}'
     customSyntax: '@stylelint/postcss-css-in-js'

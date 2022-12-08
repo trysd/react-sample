@@ -3,5 +3,5 @@ export function Child() {
     <div>
       <p>Child Test</p>
     </div>
-  )
+  );
 }

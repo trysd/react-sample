@@ -1,5 +1,4 @@
-import { Child } from "components/_test/child/Child"
-
+import { Child } from 'components/_test/child/Child';
 
 export function Hello() {
   return (
@@ -7,5 +6,5 @@ export function Hello() {
       <p>Hello Test</p>
       <Child />
     </div>
-  )
+  );
 }

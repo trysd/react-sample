@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
 export const LoginComponent = () => {
   return (
@@ -9,5 +9,5 @@ export const LoginComponent = () => {
 };
 
 const rootStyle = css`
-  color: #ed4134
+  color: #ed4134;
 `;

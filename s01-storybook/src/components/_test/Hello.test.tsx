@@ -1,5 +1,5 @@
-import { render, screen, prettyDOM } from '@testing-library/react'
-import { Hello } from './Hello'
+import { render, screen, prettyDOM } from '@testing-library/react';
+import { Hello } from './Hello';
 
 test('「Hello Test」is drawn', () => {
   // # type_1

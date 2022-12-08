@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import path from 'path';
-import svgr from 'vite-plugin-svgr'
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,12 +22,11 @@ export default defineConfig({
   resolve: {
     alias: {
       'src/': path.join(__dirname, './src/'),
-      "components": path.resolve(__dirname, "./src/components"),
-      "service": path.resolve(__dirname, "./src/service"),
-      "class": path.resolve(__dirname, "./src/class"),
-      "interface": path.resolve(__dirname, "./src/interface"),
-      "states": path.resolve(__dirname, "./src/states"),
+      components: path.resolve(__dirname, './src/components'),
+      service: path.resolve(__dirname, './src/service'),
+      class: path.resolve(__dirname, './src/class'),
+      interface: path.resolve(__dirname, './src/interface'),
+      states: path.resolve(__dirname, './src/states'),
     },
   },
-
-})
+});
