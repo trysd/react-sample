@@ -34,7 +34,7 @@ export const { setAuthLevel } = usrPropSlice.actions
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
 // will call the thunk with the `dispatch` function as the first argument. Async
 // code can then be executed and other actions can be dispatched
-export const incrementAsync = (amount: any) => (dispatch: any) => {
+export const incrementAsync = (amount: number) => (dispatch: (arg0: { payload: number; type: "usrProp/setAuthLevel" }) => void) => {
   setTimeout(() => {
     dispatch(setAuthLevel(amount))
   }, 1000)
