@@ -19,6 +19,7 @@ export const HomeComponent = () => {
 
 const rootStyle = css`
   background: #333;
+  testError: 123px;
 `;
 
 const uuidStyle = css`

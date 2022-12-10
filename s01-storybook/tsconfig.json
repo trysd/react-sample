@@ -13,13 +13,13 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react",
-    "sourceMap": true,
-    "composite": true,
+    "composite": false,
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true
   },
   "include": ["src", "jest.setup.js", "vite.config.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }],
   "exclude": ["node_modules"],
   "extends": "./tsconfig.paths.json"
 }
