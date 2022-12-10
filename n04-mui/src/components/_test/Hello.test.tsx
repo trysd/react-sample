@@ -1,6 +1,5 @@
 import { render, screen, prettyDOM } from '@testing-library/react'
-import { ReactElement } from 'react';
-import { MyComponent } from './MyComponent'
+import { Hello } from './Hello'
 
 test('「Hello Test」is drawn', () => {
   // # type_1
@@ -9,8 +8,8 @@ test('「Hello Test」is drawn', () => {
   // expect(screen.getByText('Hello Test')).toBeInTheDocument();
 
   // # type_2
-  const { baseElement } = render(<MyComponent /> as ReactElement);
+  const { baseElement } = render(<Hello />);
   console.log(prettyDOM(baseElement, Infinity));
   expect(screen.getByText('Hello Test')).toBeInTheDocument();
-
+  expect(screen.getByText('Child Test')).toBeInTheDocument();
 });

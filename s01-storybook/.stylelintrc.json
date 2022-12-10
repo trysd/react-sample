@@ -1,0 +1,18 @@
+{
+  "plugins": "stylelint-prettier",
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-prettier"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "src/**/*.+(css|ts|tsx)"
+      ],
+      "ignoreFiles": [
+        "src/stories/*.(css|tsx)"
+      ],
+      "customSyntax": "@stylelint/postcss-css-in-js"
+    }
+  ]
+}
