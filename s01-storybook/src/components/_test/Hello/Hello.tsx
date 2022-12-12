@@ -1,6 +1,9 @@
 // import { Child } from 'components/_test/child/Child';
 import Child from './child/Child';
+
+/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+
 import React, { useState } from 'react'
 
 const Hello = (bet: {children: string}) => {
@@ -15,5 +18,6 @@ const Hello = (bet: {children: string}) => {
 const rootStyle = css`
   color: #ed4134;
 `;
+
 
 export default Hello
