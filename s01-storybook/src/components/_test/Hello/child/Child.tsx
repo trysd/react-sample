@@ -8,10 +8,11 @@ const Child = () => {
     </div>
   );
 }
-export default Child
 
 const main = css`
-border: 1px solid #000;
-padding: 4px;
-color: blue;
+  border: 1px solid #000;
+  padding: 4px;
+  color: blue;
 `;
+
+export default Child

@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { v4 as uuid } from 'uuid';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import React, { useState } from 'react'
 
 export const HomeComponent = () => {
   return (
@@ -23,5 +24,5 @@ const rootStyle = css`
 `;
 
 const uuidStyle = css`
-  color: #ed4134;
+  color: #34ed8d;
 `;
