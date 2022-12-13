@@ -31,5 +31,11 @@
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "react/no-unknown-property": ["error", { "ignore": ["css"] }]
-  }
+  },
+  "overrides": [
+    {
+      "files": [ "*.stories.@(ts|tsx|js)" ],
+      "extends": "plugin:storybook/recommended"
+    }
+  ]
 }

@@ -5,6 +5,10 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  esbuild: {
+    // Uncomment to make the warning disappear .
+    jsx: 'automatic',
+  },
   plugins: [
     react({
       jsxImportSource: '@emotion/react',
