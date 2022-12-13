@@ -1,23 +1,21 @@
-// import { Child } from 'components/_test/child/Child';
-import Child from './child/Child';
-
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-
+import Child from 'components/_test/Hello/child/Child';
 import React, { useState } from 'react'
 
 const Hello = (bet: {children: string}) => {
   return (
-    <div css={rootStyle}>
-      <p>Hello Test {bet.children}</p>
+    <div css={main}>
+      <div>Hello Test {bet.children}</div>
       <Child />
     </div>
   );
 }
 
-const rootStyle = css`
-  color: #ed4134;
+const main = css`
+border: 1px solid #000;
+padding: 4px;
+color: red;
 `;
-
 
 export default Hello
