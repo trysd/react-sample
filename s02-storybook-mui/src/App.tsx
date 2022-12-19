@@ -1,14 +1,9 @@
 import './App.css';
-import { HomeComponent } from './components/home/Home';
-import Hello from './components/_test/Hello/Hello';
+import HomeComponent from './components/home/Home';
 
-function App() {
-  return (
-    <div className="App">
-      <HomeComponent />
-      <Hello>isHello</Hello>
-    </div>
-  );
-}
+const App = () => 
+  <div className="App">
+    <HomeComponent />
+  </div>
 
 export default App;
