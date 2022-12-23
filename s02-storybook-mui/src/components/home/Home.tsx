@@ -4,21 +4,63 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import React, { useState } from 'react'
 
-const HomeComponent = () =>
-  <div css={rootStyle}>
-    <div>
-      <p css={uuidStyle}>Home: {uuid()}</p>
-      <style>div</style>
-      <Stack direction="row" spacing={2}>
-        <Button variant="outlined">login</Button>
-      </Stack>
-    </div>
-  </div>
-export default HomeComponent;
+import { createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { Box } from '@mui/material';
+import SignIn from '../SignIn/Signin';
+
+let theme = createTheme({
+  palette: {
+    primary: {
+      main: "#42a5f5",
+      light: "#1976d2",
+      dark: "#1565c0",
+    },
+  },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        // 影なし
+        disableElevation: true
+      }
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: false,
+        color: "transparent"
+      },
+    },
+  }
+});
+
+const Home = () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <Box component="div">
+
+        <Button
+          color="inherit"
+          type="submit"
+          variant="contained"
+          sx={{ mt: 3, ml: 3 }}
+        >
+          information
+        </Button>
+
+        <SignIn></SignIn>
+
+      </Box>
+    </ThemeProvider>
+  )
+};
+export default Home;
 
 const rootStyle = css`
-  background: #333;
+  padding: 20px;
   height: 100vh;
+  text-align: center;
+  background-color: #242424;
 `;
 
 const uuidStyle = css`

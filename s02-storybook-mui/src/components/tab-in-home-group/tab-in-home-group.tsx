@@ -1,13 +1,13 @@
 import { css } from '@emotion/react';
 
-const LoginComponent = () => {
+const TabInHomeGroup = () => {
   return (
     <div css={rootStyle}>
-      <h1>Login</h1>
+      <h1>is tab in home group</h1>
     </div>
   );
 };
-export default LoginComponent;
+export default TabInHomeGroup;
 
 const rootStyle = css`
   color: #ed4134;

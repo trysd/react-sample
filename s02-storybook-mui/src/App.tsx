@@ -1,9 +1,13 @@
 import './App.css';
-import HomeComponent from './components/home/Home';
+import Home from './components/home/Home';
+import CssBaseline from '@mui/material/CssBaseline'
 
-const App = () => 
-  <div className="App">
-    <HomeComponent />
-  </div>
+const App = () =>
+  <>
+    <CssBaseline />
+    <div className="App">
+      <Home />
+    </div>
+  </>
 
 export default App;
