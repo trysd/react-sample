@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { v4 as uuid } from 'uuid';
 import Button from '@mui/material/Button';
@@ -19,10 +20,12 @@ export const HomeComponent = () => {
 };
 
 const rootStyle = css`
-  background: #333;
-  testError: 123px;
+  padding: 20px;
+  height: 100vh;
+  text-align: center;
+  background-color: #242424;
 `;
 
 const uuidStyle = css`
-  color: #34ed8d;
+  color: #555
 `;
