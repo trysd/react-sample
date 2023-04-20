@@ -15,7 +15,8 @@
     "stylelint": "stylelint --ignore-path .gitignore \"src/**/*.+(css|ts|tsx)\"",
     "stylelintfix": "npm run stylelint -- --fix",
     "format": "prettier --write \"**/*.+(js|json|yml|ts|tsx|css)\"",
-    "test": "jest --config ./jest.config.json"
+    "test": "jest --config ./jest.config.json",
+    "create": "node x.create.js"
   },
   "dependencies": {
     "@emotion/babel-preset-css-prop": "^11.10.0",

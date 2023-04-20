@@ -10,6 +10,40 @@ import type { RootSalesState } from '../../store/sales/store-sales'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSales, incrementOrderMenu } from '../../store/sales/slice-sales'
 
+// import {decode as base64_decode, encode as base64_encode} from 'base-64';
+
+const base64Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+const _btoa = (str: string) =>
+	Array.from(new TextEncoder().encode(str))
+		.map(x => x.toString(2).padStart(8, "0"))
+		.join("")
+		.padEnd(Math.ceil(str.length * 8 / 6) * 6, "0")
+		.split(/(.{6})/)
+		.filter(x => x)
+		.map(x => base64Chars[parseInt(x, 2)])
+		.join("")
+
+const _atob = (base64Str: string): Uint8Array => {
+      const strArray = base64Str.replace(/=/g, "").split("");
+      const result = new Uint8Array(strArray.length * 6 / 8);
+      let connection = 0;
+      let uintIterator = 0;
+      strArray.forEach((m, i) => {
+        const tableIndex = base64Chars.indexOf(strArray[i]);
+        const mod = i % 4;
+        if (mod === 0) {
+          connection = tableIndex << 2;
+          return;
+        }
+        const bitsToShift = 6 - mod * 2;
+        connection += tableIndex >>> bitsToShift;
+        result[uintIterator] = connection;
+        uintIterator++;
+        connection = (tableIndex << (8 - bitsToShift)) % 256;
+      });
+      return result;
+    };
+
 export const DiningHall = () => {
 
   // local store
@@ -28,6 +62,31 @@ export const DiningHall = () => {
   let numberOfVisitor = 0;
 
   useEffect(() => {
+    console.log(123)
+    // console.log(Buffer.from(, 'base64').toString());
+    // let decoded = base64_decode('MS4g44GC44GE44GG44GI44GKCjIuIOOBi+OBjeOBj+OBkeOBkwozLiBzYS1zaGktc3Utc2Utc28KNC4g44Gf44Gh44Gk44Gm44GoCg==');
+    // const decoded = decodeURIComponent(atob('MS4g44GC44GE44GG44GI44GKCjIuIOOBi+OBjeOBj+OBkeOBkwozLiBzYS1zaGktc3Utc2Utc28KNC4g44Gf44Gh44Gk44Gm44GoCg=='));
+    // console.log(decoded);
+    
+    var encodedData = window.btoa(window.unescape(encodeURIComponent('こんにちは')));
+    console.log(encodedData)
+    var decodedData = decodeURIComponent(escape(window.atob(encodedData)));
+    console.log(decodedData)
+
+    const text = "こんにちは"
+    const encoded = window.btoa(encodeURIComponent(text))
+    console.log(encoded) //=> JUUzJTgxJTkzJUUzJTgyJTkzJUUzJTgxJUFCJUUzJTgxJUExJUUzJTgxJUFG
+    const decoded = decodeURIComponent(window.atob(encoded))
+    console.log(decoded) //=> こんにちは
+    
+    const a = _btoa("あいうえお");
+    console.log("OK: ", a);
+    const uint8Array = _atob(a);
+    const decoder = new TextDecoder();
+    const b = decoder.decode(uint8Array);
+    console.log("OK: ", b);
+
+
     // constructive
 
     // compleat detecter
